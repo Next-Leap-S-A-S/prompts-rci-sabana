@@ -6,6 +6,8 @@ metodología **Rol · Contexto · Instrucción** aplicada al ejercicio general d
 derecho en Colombia. La página es de Next Leap. La universidad se menciona solo
 en texto, sin logo ni marca.
 
+**Publicado en:** https://next-leap-s-a-s.github.io/prompts-rci-sabana/
+
 ## Qué contiene
 
 - **Biblioteca.** 48 prompts listos para usar, 8 por cada una de las 6 áreas:
