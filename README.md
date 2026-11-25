@@ -92,3 +92,19 @@ decisión son del abogado responsable.
 ---
 
 Next Leap S.A.S. · Clase de IA para abogados · Universidad de La Sabana
+
+## Generador de prompts extensos
+
+`generador/` es una segunda página de la misma clase: el usuario arma su perfil (área, subáreas, rol, enfoque, tono), elige tareas y recibe prompts RCI extensos a su medida. Publicada en https://next-leap-s-a-s.github.io/prompts-rci-sabana/generador/ con el código de clase `SABANA2026`.
+
+Funciona sin servidor y sin clave. `generador/js/generados.js` trae 96 prompts pregenerados con IA (6 áreas por 8 tareas, 2 por combinación) y `generador/js/estatico.js` los entrega con la misma interfaz que tendría una API. La universidad se nombra solo en texto, sin logo ni colores institucionales. El código de clase se comprueba en el navegador: es una barrera de cortesía, no de seguridad.
+
+Quedan fuera en este modo «Extender con IA», «Mejorar con IA» y «Probar con IA»; el pedido libre elige los prompts más cercanos por palabras clave.
+
+Para regenerar o ampliar la biblioteca:
+
+```
+ANTHROPIC_API_KEY=... python3 tools/pregenerar.py
+```
+
+La clave solo se lee del entorno y no se guarda. Las áreas, los roles y las tareas salen de `tools/areas.json` y el método de `tools/dominio.json`.

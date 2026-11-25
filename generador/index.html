@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Generador de prompts jurídicos · Universidad de La Sabana</title>
+<meta name="description" content="Generador de prompts extensos para abogados. Tu biblioteca a la medida, 48 prompts de ejemplo y un laboratorio con medidor de calidad.">
+<link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="css/ext.css">
+<style>.estatico #lab-expandir,.estatico #lab-mejorar,.estatico #lab-probar{display:none!important}</style>
+</head>
+<body>
+<div class="inst"><div class="wrap">
+  <span class="inst-dep"><b>Universidad de La Sabana</b><small>Clase de IA para abogados</small></span>
+</div></div>
+<nav class="nav"><div class="navbar">
+  <div class="brand"><img class="mk" src="img/nextleap.png" alt=""><span class="txt">Next Leap</span><span class="code">/taller</span></div>
+  <div class="navtabs" role="tablist">
+    <button class="navtab" role="tab" data-tab="mi" aria-selected="true">Mis prompts</button>
+    <button class="navtab" role="tab" data-tab="lib" aria-selected="false">Ejemplos</button>
+    <button class="navtab" role="tab" data-tab="lab" aria-selected="false">Laboratorio</button>
+  </div>
+  <button class="btn" id="btn-cuenta" type="button" hidden>Guardar mis prompts</button>
+</div></nav>
+
+<header class="hero"><div class="wrap">
+  <p class="eyebrow">Universidad de La Sabana · Clase de IA para abogados</p>
+  <h1><span class="a">Tu espacio</span><span class="b">de prompts.</span></h1>
+  <p class="sub">Crea prompts a tu medida, guárdalos, ordénalos y vuelve a consultarlos cuando los necesites. Los ejemplos de la clase y el laboratorio te ayudan a empezar.</p>
+</div></header>
+
+<main class="wrap">
+  <div class="solo-impresion"><b>Universidad de La Sabana · Clase de IA para abogados</b><br>Taller de prompts jurídicos</div>
+  <div class="aviso">No pegues nombres reales, cédulas, NIT, radicados ni documentos con reserva. Todo lo que produce la IA es un borrador. Cada norma y cada providencia se verifica en la fuente oficial antes de usarse.</div>
+
+  <!-- ===== MIS PROMPTS ===== -->
+  <section class="tabpanel" id="t-mi">
+    <!-- Perfil: se llena una vez y se puede editar -->
+    <div class="wiz" id="onb">
+      <div class="sechead" style="margin:0 auto 4px;max-width:820px;width:100%"><p class="eyebrow">/mi-perfil</p><h2>Cuéntanos cómo trabajas</h2>
+        <p>Con esto la IA escribe prompts que se parecen a tu práctica. Lo respondes una vez y puedes cambiarlo cuando quieras.</p></div>
+      <div class="paso" id="p-area"><h3><span class="code">/1</span>Tu área</h3><p class="hint">Elige la que más pesa en tu trabajo.</p><div class="chips" id="c-area"></div></div>
+      <div class="paso off" id="p-sub"><h3><span class="code">/2</span>Tus especialidades</h3><p class="hint">Hasta tres.</p><div class="chips" id="c-sub"></div></div>
+      <div class="paso off" id="p-rol"><h3><span class="code">/3</span>Tu rol</h3><p class="hint">Cómo ejerces hoy.</p><div class="chips" id="c-rol"></div></div>
+      <div class="paso off" id="p-enf"><h3><span class="code">/4</span>Tu enfoque</h3><p class="hint">Hasta tres.</p><div class="chips" id="c-enf"></div></div>
+      <div class="paso off" id="p-ajustes">
+        <h3><span class="code">/5</span>Marco y estilo</h3>
+        <div class="grid2" style="margin-top:8px">
+          <div class="field"><span class="flabel">Jurisdicción</span><div class="chips" id="c-jur"></div></div>
+          <div class="field"><span class="flabel">Tu experiencia con IA</span><div class="chips" id="c-niv"></div></div>
+        </div>
+        <div class="field" style="margin-top:12px"><span class="flabel">Tono de tus escritos</span><div class="chips" id="c-ton"></div></div>
+      </div>
+      <div class="paso off" id="p-ctx">
+        <h3><span class="code">/6</span>Tu práctica en una línea</h3>
+        <p class="hint">Opcional, pero mejora mucho el resultado. Sin nombres reales. Ejemplo: «defiendo a aseguradoras en responsabilidad médica, casi siempre en primera instancia».</p>
+        <textarea class="ta" id="ctx" maxlength="900" placeholder="Describe en una o dos frases lo que haces."></textarea>
+      </div>
+      <div class="barra" style="justify-content:flex-end">
+        <button class="btn solid big" id="btn-perfil-ok" type="button" disabled>Guardar mi perfil</button>
+      </div>
+    </div>
+
+    <!-- Gestión de prompts -->
+    <div id="gestion" hidden>
+      <div class="sechead" style="max-width:none"><p class="eyebrow">/mis-prompts</p><h2>Tus prompts <span class="code" id="n-mi"></span></h2>
+        <p class="perfilbar"><span id="perfil-linea"></span> <button class="btn" id="btn-perfil" type="button">Editar mi perfil</button></p></div>
+      <div class="barra noprint">
+        <button class="btn solid" id="btn-crear" type="button">Crear con IA</button>
+        <button class="btn" id="btn-escribir" type="button">Escribir uno propio</button>
+        <button class="btn" id="btn-pdf" type="button">Descargar PDF</button>
+        <button class="btn" id="btn-copiar-todo" type="button">Copiar todo</button>
+        <button class="btn solid" id="btn-registro" type="button" hidden>Guardar para volver a consultarlos</button>
+      </div>
+
+      <div class="box crear noprint" id="crear" hidden>
+        <div class="boxhead"><span class="code">/crear-con-ia</span><span class="hint">Usa tu perfil. Cada tarea trae prompts distintos entre sí.</span></div>
+        <div class="boxbody">
+          <span class="flabel">¿Para qué tareas? (hasta seis)</span>
+          <div class="tareas" id="c-tar" style="margin:8px 0 12px"></div>
+          <div class="field"><span class="flabel">O cuéntame qué necesitas (opcional)</span>
+            <textarea class="ta" id="cr-pedido" maxlength="600" placeholder="Ejemplo: un prompt para revisar el poder que me manda un cliente antes de presentar la demanda."></textarea></div>
+          <div class="field" style="margin-top:12px"><span class="flabel">Cuántos prompts por tarea</span><div class="chips" id="c-por"></div></div>
+          <div class="barra" style="margin:14px 0 0"><button class="btn solid big" id="btn-gen" type="button" disabled>Crear prompts</button><span class="resumen" id="resumen"></span></div>
+          <div id="cr-fallos"></div>
+        </div>
+      </div>
+
+      <div class="barra noprint" style="margin-bottom:8px"><input class="inp" id="q-mi" type="search" placeholder="Buscar en mis prompts" style="max-width:340px"><span class="code" id="count-mi"></span></div>
+      <div class="chips noprint" id="chips-mi" style="margin-bottom:16px"></div>
+      <div class="grid" id="grid-mi"></div>
+      <div class="vacio" id="vacio-mi" hidden></div>
+    </div>
+  </section>
+
+  <!-- ===== EJEMPLOS ===== -->
+  <section class="tabpanel" id="t-lib" hidden>
+    <div class="sechead"><p class="eyebrow">/ejemplos</p><h2>48 prompts de la clase</h2>
+      <p>Ocho por cada área. Ábrelos para leerlos y probarlos. Si uno te sirve, guárdalo en tus prompts y adáptalo.</p></div>
+    <div class="barra" style="margin-top:0"><input class="inp" id="q" type="search" placeholder="Buscar por palabra: demanda, tutela, despido..." style="max-width:380px"><span class="code" id="count"></span></div>
+    <div class="chips" id="chips-lib" style="margin-bottom:16px"></div>
+    <div class="grid" id="grid-lib"></div>
+    <p class="resumen" id="vacio-lib" hidden>Sin resultados. Prueba otra palabra o quita el filtro.</p>
+  </section>
+
+  <!-- ===== LABORATORIO ===== -->
+  <section class="tabpanel" id="t-lab" hidden>
+    <div class="sechead"><p class="eyebrow">/laboratorio</p><h2>Escribe el tuyo. El medidor te dice qué falta.</h2>
+      <p>Separa las tres partes y mira el puntaje. El medidor revisa ocho criterios mientras escribes y el detector avisa si quedó una cédula, un NIT o un radicado.</p></div>
+    <div class="box expandir" id="expandir">
+      <div class="boxbody">
+        <b>¿No quieres redactarlo desde cero?</b>
+        <p class="hint" style="margin:4px 0 10px">Escribe una idea corta en una, dos o las tres partes. La IA las extiende: rol detallado, contexto con campos entre [corchetes] e instrucción con pasos y subpasos con sangría. Luego lo ajustas a tu caso.</p>
+        <div class="btnrow"><button class="btn solid" id="lab-expandir" type="button">Extender con IA</button><button class="btn" id="lab-deshacer" type="button" hidden>Deshacer</button><span class="code" id="lab-exp-estado"></span></div>
+      </div>
+    </div>
+    <div class="lab">
+      <div class="fields">
+        <div class="field" data-k="rol"><div class="fhead"><label for="f-rol">/rol</label><span class="code" id="c-rol-n">0</span></div>
+          <span class="hint">Especialidad, años de práctica, tipo de clientes o despachos y para quién escribe.</span>
+          <textarea class="ta" id="f-rol" placeholder="Eres un abogado... con experiencia en..."></textarea>
+          <div class="seeds" data-for="f-rol"><button class="seed" type="button">Eres un abogado litigante senior</button><button class="seed" type="button">con 15 años de práctica en procesos civiles</button><button class="seed" type="button">en Colombia</button><button class="seed" type="button">que escribe para clientes sin formación jurídica</button></div></div>
+        <div class="field" data-k="ctx"><div class="fhead"><label for="f-ctx">/contexto</label><span class="code" id="c-ctx-n">0</span></div>
+          <span class="hint">Hechos, datos concretos, términos, etapa procesal, qué hay en el expediente y qué ya intentaste.</span>
+          <textarea class="ta" id="f-ctx" placeholder="El caso es... El término vence... El expediente tiene... Ya intentamos..."></textarea>
+          <div class="seeds" data-for="f-ctx"><button class="seed" type="button">El término vence el</button><button class="seed" type="button">La contraparte es</button><button class="seed" type="button">El expediente tiene</button><button class="seed" type="button">Ya intentamos</button><button class="seed" type="button">Información anonimizada</button></div></div>
+        <div class="field" data-k="ins"><div class="fhead"><label for="f-ins">/instrucción</label><span class="code" id="c-ins-n">0</span></div>
+          <span class="hint">Verbo, entregable, formato, extensión, qué no hacer y cómo verificar.</span>
+          <textarea class="ta" id="f-ins" placeholder="Devuelve... en formato... de máximo... No concluyas... Marca con [verificar]..."></textarea>
+          <div class="seeds" data-for="f-ins"><button class="seed" type="button">Devuelve una tabla con</button><button class="seed" type="button">Redacta el memorial con</button><button class="seed" type="button">Máximo 300 palabras</button><button class="seed" type="button">No concluyas: presenta opciones</button><button class="seed" type="button">Marca con [verificar] las normas que cites</button><button class="seed" type="button">No inventes sentencias</button><button class="seed" type="button">No incluyas datos identificables</button></div></div>
+        <div class="btnrow"><button class="btn" id="lab-ejemplo" type="button">Cargar un ejemplo de la librería</button><button class="btn" id="lab-limpiar" type="button">Limpiar</button></div>
+      </div>
+      <div class="side">
+        <div class="box">
+          <div class="meterhead"><span class="score" id="score">0<sub>/100</sub></span>
+            <div style="flex:1;display:flex;flex-direction:column;gap:8px"><div class="bar"><div class="track"><div class="fill" id="fill" style="width:0"></div></div></div><span class="code">/calidad-del-prompt</span></div>
+            <span class="verdict" id="verdict">Empieza a escribir</span></div>
+          <ul class="crit" id="crit"></ul>
+          <div class="pii" id="pii" hidden></div>
+        </div>
+        <div class="box"><div class="boxhead"><span class="code">/prompt-armado</span>
+            <div class="btnrow"><button class="btn" id="lab-copiar" type="button">Copiar</button><button class="btn" id="lab-guardar" type="button">Guardar en mis prompts</button></div></div>
+          <div class="pv" id="preview"></div></div>
+        <div class="box"><div class="boxhead"><span class="code">/ia</span>
+            <div class="btnrow"><button class="btn" id="lab-mejorar" type="button">Mejorar con IA</button><button class="btn solid" id="lab-probar" type="button">Probar con IA</button></div></div>
+          <div class="salida" id="lab-salida" style="border-top:0;min-height:60px"><span class="hint">La respuesta aparece aquí. Es un borrador que debes verificar.</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <footer><div class="foot-inst"><span><b>Universidad de La Sabana</b><br>Clase de IA para abogados</span></div><p class="note">Material de Next Leap S.A.S. para la clase de IA para abogados. Los prompts nuevos los genera un modelo de lenguaje. Los modelos inventan normas y jurisprudencia con apariencia verosímil. La decisión y el concepto son del abogado responsable.</p></footer>
+</main>
+
+<dialog id="dlg-cuenta"><div class="cuenta">
+  <div class="shead"><div><span class="code">/mi-cuenta</span><h3 id="cu-titulo">Guarda tus prompts</h3></div><button class="btn" data-c="cerrar" type="button" aria-label="Cerrar">✕</button></div>
+  <div id="cu-fuera" class="cu-cuerpo">
+    <p class="hint" style="margin:0">Un registro de un minuto. Con tu correo y un PIN vuelves a tu biblioteca desde cualquier computador o celular. No es una cuenta de la universidad ni lleva contraseña de nada más.</p>
+    <div class="chips" id="cu-modo"><button class="chip" data-m="nuevo" aria-pressed="true" type="button">Crear mi registro</button><button class="chip" data-m="viejo" aria-pressed="false" type="button">Ya tengo registro</button></div>
+    <form id="cu-form" class="cu-form">
+      <div class="field" id="cu-f-nombre"><label for="cu-nombre">Nombre</label><input class="inp" id="cu-nombre" autocomplete="name" maxlength="120"></div>
+      <div class="field"><label for="cu-correo">Correo</label><input class="inp" id="cu-correo" type="email" autocomplete="email" maxlength="254"></div>
+      <div class="field"><label for="cu-pin">PIN de 4 a 8 números</label><input class="inp" id="cu-pin" type="password" inputmode="numeric" autocomplete="current-password" maxlength="8"><span class="hint">Es solo para volver a tu biblioteca. No uses la clave de tu banco ni la de tu correo.</span></div>
+      <div class="err" id="cu-err"></div>
+      <button class="btn solid big" id="cu-enviar" type="submit">Crear mi registro</button>
+    </form>
+  </div>
+  <div id="cu-dentro" class="cu-cuerpo" hidden>
+    <p id="cu-hola" style="margin:0;font-size:15px"></p>
+    <p class="hint" style="margin:0">Tus prompts se guardan solos cada vez que cambias algo. Para volver, entra con tu correo y tu PIN en esta misma dirección.</p>
+    <div class="btnrow"><button class="btn" id="cu-salir" type="button">Salir y borrar de este equipo</button></div>
+  </div>
+</div></dialog>
+<dialog id="dlg"><div id="sheet"></div></dialog>
+<div class="gate" id="gate" hidden><form class="gatebox" id="gate-form">
+  <h2>Código de la clase</h2><p>Está en la pantalla de la sala.</p>
+  <input class="inp" id="gate-inp" autocomplete="off" autocapitalize="characters" maxlength="30">
+  <div class="err" id="gate-err"></div>
+  <button class="btn solid big" type="submit">Entrar</button>
+</form></div>
+<div class="toast" id="toast"></div>
+
+<script src="js/datos.js" charset="utf-8"></script>
+<script src="js/libreria.js" charset="utf-8"></script>
+<script src="config.js" charset="utf-8"></script>
+<script src="js/generados.js" charset="utf-8"></script>
+<script src="js/estatico.js" charset="utf-8"></script>
+<script src="js/app.js" charset="utf-8"></script>
+</body>
+</html>
