@@ -131,7 +131,7 @@ dialog::backdrop{background:rgba(17,17,20,.55);backdrop-filter:blur(4px)}
 @media print{#onb,#crear,.perfilbar .btn{display:none!important}}
 
 /* ===== Version neutra: la universidad se nombra solo en texto, sin logo ni colores institucionales. ===== */
-:root{--verde:#1f2937;--verde-h:#111827;--verde-claro:#6b7280;--verde-suave:#f3f4f6}
+:root{--verde:#111114;--verde-h:#2c2d35;--verde-claro:#9333ea;--verde-suave:#f4f4f7;--grad:linear-gradient(135deg,#2563eb,#9333ea,#db2777)}
 .inst{background:var(--verde);color:#fff}
 .inst .wrap{display:flex;align-items:center;gap:18px;padding-top:12px;padding-bottom:12px}
 .inst-logo{height:40px;width:auto;display:block;flex:none}
@@ -141,15 +141,15 @@ dialog::backdrop{background:rgba(17,17,20,.55);backdrop-filter:blur(4px)}
 .inst-dep small{font-size:12px;color:rgba(255,255,255,.8)}
 @media(max-width:560px){.inst-logo{height:30px}.inst .wrap{gap:12px}.inst-dep b{font-size:13px}.inst-dep small{display:none}}
 .eyebrow{color:var(--verde);font-weight:600}
-.hero h1 .b{color:var(--verde)}
+.hero h1 .b{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .btn.solid{background:var(--verde);border-color:var(--verde);color:#fff}
 .btn.solid:hover{background:var(--verde-h);border-color:var(--verde-h)}
 .chip[aria-pressed="true"],.tarea[aria-pressed="true"]{background:var(--verde);border-color:var(--verde)}
 .navtab[aria-selected="true"]{color:var(--verde);background:var(--verde-suave)}
-.card::before{background:linear-gradient(90deg,var(--verde),var(--verde-claro))}
+.card::before{background:var(--grad)}
 .paso h3 .code,.sechead .eyebrow{color:var(--verde)}
-.aviso{background:var(--verde-suave);border-color:#cfe2d5;color:#1d4a30}
-.inp:focus,.ta:focus{border-color:var(--verde);box-shadow:0 0 0 3px rgba(0,82,44,.14)}
+.aviso{background:var(--verde-suave);border-color:rgba(0,0,0,.1);color:#33343c}
+.inp:focus,.ta:focus{border-color:var(--verde);box-shadow:0 0 0 3px rgba(147,51,234,.16)}
 .ico.on{color:var(--verde-claro)}
 .score{--sc:var(--ink20)}
 .foot-inst{display:flex;align-items:center;gap:14px;margin-bottom:14px;padding:12px 16px;background:var(--verde);color:#fff;border-radius:8px;max-width:520px;font-size:13px;line-height:1.4}
@@ -166,7 +166,15 @@ dialog::backdrop{background:rgba(17,17,20,.55);backdrop-filter:blur(4px)}
   .card::before{background:var(--verde)}
 }
 
-.expandir{margin-bottom:18px;background:var(--verde-suave);border-color:#cfe2d5}
+.expandir{margin-bottom:18px;background:var(--verde-suave);border-color:rgba(0,0,0,.1)}
 .expandir .boxbody{padding:14px 16px}
 .field .ta{overflow:hidden}
 #f-rol,#f-ctx,#f-ins{min-height:92px}
+
+/* ===== Marca Next Leap ===== */
+.inst{border-bottom:3px solid transparent;border-image:var(--grad) 1}
+.inst-logo{height:26px;filter:brightness(0) invert(1)}
+.inst-name{font-weight:600;font-size:15px;letter-spacing:-.01em}
+.foot-inst small{color:#ffffffb3;font-size:11.5px}
+.foot-inst img{height:26px;filter:brightness(0) invert(1)}
+@media(max-width:560px){.inst-name{display:none}}
